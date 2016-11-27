@@ -1,0 +1,42 @@
+# @(#) $Id: Makefile,v 1.1 2010/12/06 22:04:55 mark Exp $
+# $Log: Makefile,v $
+# Revision 1.1  2010/12/06 22:04:55  mark
+# Initial revision
+#
+#
+CC=gcc
+CFLAGS = -I. -I/usr/local/include -g
+LDFLAGS = 
+
+TARGET = edpath
+HDRS =  edpath.h strsep.h
+SRCS =  edpath.c strsep.c
+OBJS =  edpath.o strsep.o
+
+
+all:	$(TARGET)
+
+install: all
+
+
+
+$(TARGET): $(OBJS)
+	$(CC) $(CFLAGS)	 $(OBJS) -o $(TARGET) $(LDFLAGS)
+
+
+$(OBJS): $(SRC)
+
+.c.o:
+	$(CC) $(CFLAGS) -c $*.c
+
+clean:
+	rm -f *.o $(TARGET)
+
+veryclean:
+	rm -f *.o $(TARGET) tags .depend
+
+tags: $(SRCS) $(HDRS)
+	ctags -wt $(SRCS) $(HDRS)
+
+depend:	$(SRCS) $(HDRS)
+	mkdep $(CFLAGS) $(SRCS)
